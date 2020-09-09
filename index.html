@@ -18,40 +18,49 @@
     <header>
         <!-- Navbar from Bootstrap -->
         <nav class="nav">
-            <a href="#"> Get Highscores</a>
+            <a href="#"> View HighScores</a>
             <p class="ml-auto" id="timer">
             </p>
+        <div id="timer">Time left: </div>
         </nav>
     </header>
 
-    <main class="container">
-        <!-- <div class="row">
-            <div class="col-sm-12">
-                <h1>Coding Quiz Challenge</h1>
-            </div>
+    <div class="container">
+        <div id="startpage">
+            <h1>Coding Quiz Challenge</h1>
+            <h4>Try to answer the following code related questions within the time limit. Keep in mind that
+                incorrect answers will penalize your score-time by 10 seconds!</h4>
+                <button id="startbtn">Start Quiz</button>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <h3>Try to answer the following code related questions within the time limit. Keep in mind that
-                    incorrect answers will penalize your score/time by 10 seconds.</h3>
-            </div>
-        </div> -->
-        <div class="btn-group-vertical" id="buttonGroup">
+    </div>
+    <div id="quiz">
+            <div id="questions"><p>Questions Placeholder</p></div>
+                <button id="1" onclick="checkAnswer('1')">1</button>
+                <button id="2" onclick="checkAnswer('2')">2</button>
+                <button id="3" onclick="checkAnswer('3')">3</button>
+                <button id="4" onclick="checkAnswer('4')">4</button>
+            <div id="result"></div>
+    </div>
+    <div id="itsover">
+        <h2>All done!</h2>
+        <input type="text" size = "35" placeholder="Enter initials:" name="initials" id="initials"/>
+        <div id="finalScore"></div>
+        <button id="submit">Submit</button>
+    </div>
+    <div id=highscoresContainer>
+    <div id="high-scorePage">
+        <div id="highscore-header">
+            <h1>Highscores</h1>
+            <!-- <h3>Score</h3> -->
         </div>
-    </main>
+        <div id = "highscore-initials, highscore-score"></div>
+    </div>
+    <div id="endQuizBtns">
+        <button id="goBack" onclick="redoQuiz()">Go Back</button>
+        <button id="clearHighscores" onclick="clearScore()">Clear Highscores</button>
+    </div>
+
     <!-- My Javascript  -->
     <script src="./script.js"></script>
-    <!--  jQuery, Popper.js, and Bootstrap JavaScript plugins. -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-        </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
-        </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
-        </script>
-
 </body>
-
 </html>
