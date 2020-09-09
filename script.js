@@ -1,4 +1,33 @@
-console.log("Coding Quiz Challenge");
+// console.log("Coding Quiz Challenge");
+
+// Quiz Question object - var with array and object for questions.
+var quizQuestions = [{
+        question: "Commonly used data types DO NOT include:",
+        choices: ["strings", "booleans", "alerts", "numbers"],
+        correctAnswer: "alerts"
+    },
+        {
+        question: "The condition in an if / else statement is enclosed within _______.",
+        choices: ["quotes", "curly brackets", "parenthesis", "square brackets"],
+        correctAnswer: "parenthesis"
+    },   
+        {
+        question: "Arrays in JavaScript can be used to store _______.",
+        choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
+        correctAnswer: "all of the above"
+    },       
+        {
+        question: "String values must be enclosed within _______ when being assigned to variables.",
+        choices: ["commas", "curly brackets", "quotes", "parenthesis"],
+        correctAnswer: "quotes"
+    },        
+        {
+        question: "A very useful tool during development and debugging for printing content to the debugger is:",
+        choices: ["JavaScript", "terminal/bash", "for loops", "console.log"],
+        correctAnswer: "console.log"
+    }, 
+];
+
 
 // HTML elements to manipulate
 
@@ -7,49 +36,12 @@ var button2 = document.getElementById("2");
 var button3 = document.getElementById("3");
 var button4 = document.getElementById("4");
 // Other variables
-
-var timeLeft = 75;
-var timerInterval;
 var score = 0;
 
+var secondsLeft = 75;
+var timerInterval;
 
-// Quiz Question object
-var quizQuestions = [{
-    question: "Commonly used data types DO NOT include:",
-    choice1: "1. strings",
-    choice2: "2. booleans",
-    choice3: "3. alerts",
-    choice4: "4. numbers",
-    correctAnswer: "3"},
-    {
-    question: "The condition in an if / else statement is enclosed within _______.",
-    choice1: "1. quotes",
-    choice2: "2. curly brackets",
-    choice3: "3. parenthesis",
-    choice4: "4. square brackets",
-    correctAnswer: "3"},   
-    {
-    question: "Arrays in JavaScript can be used to store _______.",
-    choice1: "1. numbers and strings",
-    choice2: "2. other arrays",
-    choice3: "3. booleans",
-    choice4: "4. all of the above",
-    correctAnswer: "4"},       
-    {
-    question: "String values must be enclosed within _______ when being assigned to variables.",
-    choice1: "1. commas",
-    choice2: "2. curly brackets",
-    choice3: "3. quotes",
-    choice4: "4. parenthesis",
-    correctAnswer: "3"},        
-    {
-    question: "A very useful tool during development and debugging for printing content to the debugger is:",
-    choice1: "1. JavaScript",
-    choice2: "2. terminal/bash",
-    choice3: "3. for loops",
-    choice4: "4. console.log",
-    correctAnswer: "4"}, 
-];
+
 
 //  var score = 0;
 
