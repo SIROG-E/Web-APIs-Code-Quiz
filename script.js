@@ -1,6 +1,3 @@
-// console.log("Coding Quiz Challenge");
-
-// Declared  Variables
 var startQuizBtn = document.querySelector("#startQuiz");
 var answer1RadioBtn = document.querySelector("#answer1RadioBtn");
 var answer2RadioBtn = document.querySelector("#answer2RadioBtn");
@@ -39,18 +36,25 @@ var quizQuestions = [{
   },
 ];
 
+var questionsAnsweredCount = 0;
 var questionIndexOnDisplay = 0;
 var correctCount = 0;
 
 function ResetForm() {
-	questionIndexOnDisplay = 0;
-    correctCount = 0;
+  questionIndexOnDisplay = 0;
+  correctCount = 0;  
+  document.querySelector("#timer").innerHTML = "";
+  
+  
+
 }
 
 function RefreshQuestionInfo(index) {
+
   questionIndexOnDisplay = index;
 
   var qPrompt = quizQuestions[index];
+
   //update question id
   document.querySelector("#qid").innerHTML = questionIndexOnDisplay + 1;
 
@@ -65,7 +69,7 @@ function RefreshQuestionInfo(index) {
 }
 
 function EvaluateAnswer(answerChosenId, answerIndex) {
-  console.log('Evaluated question in index: ', answerIndex);
+  //console.log('Evaluated question in index: ', answerIndex);
 
   var question = quizQuestions[answerIndex];
   var quizAnswer = question.correctAnswer;
@@ -80,11 +84,13 @@ function EvaluateAnswer(answerChosenId, answerIndex) {
   } else {
     //wrong
     document.querySelector("#answerResult").innerHTML = "Previous answer was: Wrong!";
+
   }
+
 }
 
 function CalculateScore() {
-  return correctCount * 20
+  return correctCount * 20;
 }
 
 function ToggleHideShow(elementId) {
@@ -115,18 +121,63 @@ function BuildOL(array) {
   return list;
 }
 
+var interval;
+
+function StopTimer() {
+  clearInterval(interval);
+}
+
+function TimerCountDown(callback) {
+
+  var count = 25;
+
+  interval = setInterval(function() {
+    document.getElementById('timer').innerHTML = count;
+    count--;
+
+    if (count === 0) {
+      clearInterval(interval);
+      //document.getElementById('timer').innerHTML = 'Done';
+      // or...
+
+      if (questionsAnsweredCount < 5) {
+        callback();
+      }
+
+    }
+  }, 1000);
+
+}
+
+
+
+
+function ShowFinalSore() {
+  ToggleHideShow('questionModal');
+  ToggleHideShow('doneModal');
+  document.querySelector("#finalScore").innerHTML = CalculateScore()
+}
+
+function TimerEnded() {
+  alert('Time Ended');
+  ShowFinalSore();
+}
+
+
 function ClickEvent(value, elementId, args) {
   //alert(`Clicked Something: ${elementId}`);
 
   switch (value) {
     case "start":
-      console.log('question On Display: ', questionIndexOnDisplay + 1, 'questionIndexOnDisplay: ', questionIndexOnDisplay);
+      //console.log('question On Display: ', questionIndexOnDisplay + 1, 'questionIndexOnDisplay: ', questionIndexOnDisplay);
       ToggleHideShow('startModal');
       ToggleHideShow('questionModal');
       RefreshQuestionInfo(0);
+      TimerCountDown(TimerEnded);
       break;
     case "answer":
-      console.log('question On Display: ', questionIndexOnDisplay + 2, 'questionIndexOnDisplay: ', questionIndexOnDisplay + 1);
+      //console.log('question On Display: ', questionIndexOnDisplay + 2, 'questionIndexOnDisplay: ', questionIndexOnDisplay + 1);
+      questionsAnsweredCount++;
 
       EvaluateAnswer(elementId, questionIndexOnDisplay);
       if (questionIndexOnDisplay < 4) {
@@ -136,6 +187,7 @@ function ClickEvent(value, elementId, args) {
         RefreshQuestionInfo(questionIndexOnDisplay + 1);
       } else {
         //EvaluateAnswer(elementId, questionIndexOnDisplay);
+        StopTimer();
         ToggleHideShow('questionModal');
         ToggleHideShow('doneModal');
         document.querySelector("#finalScore").innerHTML = CalculateScore()
@@ -145,11 +197,11 @@ function ClickEvent(value, elementId, args) {
 
       // code block
       break;
-    case "submitScore":      
+    case "submitScore":
       var userResult = document.querySelector("#initials").value;
       quizes.push(`${userResult} - ${CalculateScore()}`);
-      
-      
+
+
       document.querySelector("#initials").value = '';
       ToggleHideShow('doneModal');
       ToggleHideShow('highScoresModal');
@@ -178,6 +230,7 @@ function ClickEvent(value, elementId, args) {
 }
 
 function here() {
+
 }
 
 // Add event listener to generate button
