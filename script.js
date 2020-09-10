@@ -10,7 +10,6 @@ var submitScoreBtn = document.querySelector("#submitScore");
 var goBackBtn = document.querySelector("#goBack");
 var clearScoresBtn = document.querySelector("#clearScores");
 
-// Quiz Question object - var with array 
 var quizQuestions = [{
     question: "Commonly used data types DO NOT include:",
     choices: ["strings", "booleans", "alerts", "numbers"],
@@ -38,11 +37,13 @@ var quizQuestions = [{
   },
 ];
 
-// Start working Code
 var questionOnDisplay = 0;
+var rightCount = 0;
 
 function RefreshQuestionInfo(index) {
-  questionOnDisplay = index;
+
+  questionOnDisplay = index + 1;
+
   var qPrompt = quizQuestions[index];
 
   //update question id
@@ -59,13 +60,23 @@ function RefreshQuestionInfo(index) {
 }
 
 function EvaluateAnswer(answerChosenId, answerIndex) {
-	alert (answerChosenId);
-    alert (answerIndex);
 
   var question = quizQuestions[answerIndex];
-  var quizAnswer = question.correctAnswer;  
-  var userAnswer = document.querySelector(`#${answerChosenId}`).innerHTML;
-    alert(`quiz: ${quizAnswer}, user: ${userAnswer}`);  
+  var quizAnswer = question.correctAnswer;
+  var userAnswer = document.querySelector(`#${answerChosenId.replace('RadioBtn', 'Lbl')}`).innerHTML;
+
+  if (quizAnswer === userAnswer) {
+    //right
+    document.querySelector("#answerResult").innerHTML = "Previous answer was: Right!";
+    rightCount++;
+
+
+  } else {
+    //wrong
+    document.querySelector("#answerResult").innerHTML = "Previous answer was: Wrong!";
+
+  }
+
 }
 
 
@@ -79,7 +90,7 @@ function ToggleHideShow(elementId) {
 }
 
 function ClickEvent(value, elementId, args) {
-  alert(`Clicked Something: ${elementId}`);
+  //alert(`Clicked Something: ${elementId}`);
 
   switch (value) {
     case "start":
@@ -88,8 +99,14 @@ function ClickEvent(value, elementId, args) {
       RefreshQuestionInfo(0);
       break;
     case "answer":
-      EvaluateAnswer(elementId, questionOnDisplay);
-      RefreshQuestionInfo(questionOnDisplay + 1);
+    	console.log('questionOnDisplay: ', questionOnDisplay);
+      if (questionOnDisplay < 5) {
+        EvaluateAnswer(elementId, questionOnDisplay);
+        RefreshQuestionInfo(questionOnDisplay);
+      } else {
+        ToggleHideShow('questionModal');
+      }
+
       // code block
       break;
     case "submitScore":
@@ -105,6 +122,10 @@ function ClickEvent(value, elementId, args) {
       // code block
       break;
   }
+
+
+
+
 }
 
 function here() {
