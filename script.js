@@ -1,6 +1,6 @@
 // console.log("Coding Quiz Challenge");
 
-// Quiz Question object - var with array and object for questions.
+// Quiz Question object - var with array 
 var quizQuestions = [{
         question: "Commonly used data types DO NOT include:",
         choices: ["strings", "booleans", "alerts", "numbers"],
@@ -28,18 +28,18 @@ var quizQuestions = [{
     }, 
 ];
 
-
 // HTML elements to manipulate
-
 var button1 = document.getElementById("1");
 var button2 = document.getElementById("2");
 var button3 = document.getElementById("3");
 var button4 = document.getElementById("4");
+
 // Other variables
 var score = 0;
 
 var secondsLeft = 75;
-var timerInterval;
+var timerInterval = 0;
+var penalty = 10;
 
 
 

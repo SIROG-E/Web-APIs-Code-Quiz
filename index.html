@@ -1,66 +1,103 @@
-<!DOCTYPE html>
-<html class="no-js">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Code Quiz Challenge</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- My CSS -->
-    <link rel="stylesheet" href="style.css">
-</head>
+<!------ Include the above in your HEAD tag ---------->
+<div class="container-fluid bg-info">
 
-<body>
-    <header>
-        <!-- Navbar from Bootstrap -->
-        <nav class="nav">
-            <a href="#"> View HighScores</a>
-            <p class="ml-auto" id="timer">
-            </p>
-        <div id="timer">Time left: </div>
-        </nav>
-    </header>
+<!-- Bootstrap Modal startpage -->
+  <div id="startModal" class="modal-dialog" style="display:show">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Coding Quiz Challenge</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Try to answer the following code related questions within the time limit. Keep in mind that incorrect answers will penalize your score-time by 10 seconds!</p>
+      </div>
+      <div class="modal-footer">
+        <button id="startQuiz" type="button" class="btn btn-primary">Start Quiz</button>
+      </div>
+    </div>
+  </div>
 
-    <div class="container">
-        <div id="startpage">
-            <h1>Coding Quiz Challenge</h1>
-            <h4>Try to answer the following code related questions within the time limit. Keep in mind that
-                incorrect answers will penalize your score-time by 10 seconds!</h4>
-                <button id="startbtn">Start Quiz</button>
+<!-- Bootstrap Modal questions and answers buttons-->
+  <div id="questionModal" class="modal-dialog" style="display:show">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><span class="label label-warning" id="qid">2</span> <span id="questionPrompt">Coco is CORRECT</span></h3>
+      </div>
+      <div class="modal-body">
+        <div class="col-xs-3 col-xs-offset-5">
+          <div id="loadbar" style="display: none;">
+            <div class="blockG" id="rotateG_01"></div>
+            <div class="blockG" id="rotateG_02"></div>
+            <div class="blockG" id="rotateG_03"></div>
+            <div class="blockG" id="rotateG_04"></div>
+            <div class="blockG" id="rotateG_05"></div>
+            <div class="blockG" id="rotateG_06"></div>
+            <div class="blockG" id="rotateG_07"></div>
+            <div class="blockG" id="rotateG_08"></div>
+          </div>
         </div>
-    </div>
-    <div id="quiz">
-            <div id="questions"><p>Questions Placeholder</p></div>
-                <button id="1" onclick="checkAnswer('1')">1</button>
-                <button id="2" onclick="checkAnswer('2')">2</button>
-                <button id="3" onclick="checkAnswer('3')">3</button>
-                <button id="4" onclick="checkAnswer('4')">4</button>
-            <div id="result"></div>
-    </div>
-    <div id="itsover">
-        <h2>All done!</h2>
-        <input type="text" size = "35" placeholder="Enter initials:" name="initials" id="initials"/>
-        <div id="finalScore"></div>
-        <button id="submit">Submit</button>
-    </div>
-    <div id=highscoresContainer>
-    <div id="high-scorePage">
-        <div id="highscore-header">
-            <h1>Highscores</h1>
-            <!-- <h3>Score</h3> -->
-        </div>
-        <div id = "highscore-initials, highscore-score"></div>
-    </div>
-    <div id="endQuizBtns">
-        <button id="goBack" onclick="redoQuiz()">Go Back</button>
-        <button id="clearHighscores" onclick="clearScore()">Clear Highscores</button>
-    </div>
 
-    <!-- My Javascript  -->
-    <script src="./script.js"></script>
-</body>
-</html>
+        <div class="quiz" id="quiz" data-toggle="buttons">
+          <label class="element-animation1 btn btn-lg btn-primary btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input id="answer1RadioBtn" type="radio" name="q_answer" value="1"> <span id="answer1Lbl">1 One</span> </label>
+          <label class="element-animation2 btn btn-lg btn-primary btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input id="answer2RadioBtn" type="radio" name="q_answer" value="2"><span id="answer2Lbl">1 One</span> </label>
+          <label class="element-animation3 btn btn-lg btn-primary btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input id="answer3RadioBtn" type="radio" name="q_answer" value="3"><span id="answer3Lbl">1 One</span> </label>
+          <label class="element-animation4 btn btn-lg btn-primary btn-block"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input id="answer4RadioBtn" type="radio" name="q_answer" value="4"><span id="answer4Lbl">1 One</span> </label>
+        </div>
+      </div>
+      <div class="modal-footer text-muted">
+        <span id="answerResult"></span>
+      </div>
+    </div>
+  </div>
+
+<!-- Bootstrap Modal All Done Display -->
+  <div id="doneModal" class="modal-dialog" style="display:show">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">All Done!</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Your final score is <label id="finalScore">XXX</label>
+        </p>
+        <input type="text" size="35" placeholder="Enter initials:" name="initials" id="initials" />
+
+      </div>
+      <div class="modal-footer">
+        <button id="submitScore" type="button" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+<!-- Bootstrap Modal HighScore Display -->
+  <div id="highScoresModal" class="modal-dialog" style="display:show">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Highscores</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <ol id="highScores">
+          <li>JC - 100</li>
+          <li>EC - 74</li>
+        </ol>
+
+      </div>
+      <div class="modal-footer">
+        <button id="goBack" type="button" class="btn btn-primary">Go Back</button>
+        <button id="clearScores" type="button" class="btn btn-primary">Clear Highscores</button>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
