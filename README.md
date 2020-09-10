@@ -36,11 +36,12 @@ The criteria given to:
 
 ## Review
 
-After completing this application, I was able to build a quiz to test code knowledge and tried to the best of my abilities to feature a clean and polished user interface and to create a responsive app.
+After completing this application, I was able to build a quiz to test code knowledge and tried to the best of my abilities to feature a clean and polished user interface and to create a responsive app. I had to restart my project several times because kept searching for easier options from bootstrap. 
 
 To complete this project I got help from several sites listed below:
 
 * https://getbootstrap.com/
 * https://jsfiddle.net/
 * https://www.w3schools.com/
+* https://www.google.com/
 
