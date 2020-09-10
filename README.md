@@ -44,4 +44,6 @@ To complete this project I got help from several sites listed below:
 * https://jsfiddle.net/
 * https://www.w3schools.com/
 * https://www.google.com/
+* https://stackoverflow.com/
 
+Note: the links include main sites only. Too many specific ones to include here. 

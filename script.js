@@ -10,6 +10,8 @@ var submitScoreBtn = document.querySelector("#submitScore");
 var goBackBtn = document.querySelector("#goBack");
 var clearScoresBtn = document.querySelector("#clearScores");
 
+var quizes = [];
+
 var quizQuestions = [{
     question: "Commonly used data types DO NOT include:",
     choices: ["strings", "booleans", "alerts", "numbers"],
@@ -37,17 +39,20 @@ var quizQuestions = [{
   },
 ];
 
-var questionOnDisplay = 0;
-var rightCount = 0;
+var questionIndexOnDisplay = 0;
+var correctCount = 0;
+
+function ResetForm() {
+	questionIndexOnDisplay = 0;
+    correctCount = 0;
+}
 
 function RefreshQuestionInfo(index) {
-
-  questionOnDisplay = index + 1;
+  questionIndexOnDisplay = index;
 
   var qPrompt = quizQuestions[index];
-
   //update question id
-  document.querySelector("#qid").innerHTML = index + 1;
+  document.querySelector("#qid").innerHTML = questionIndexOnDisplay + 1;
 
   //update prompt
   document.querySelector("#questionPrompt").innerHTML = qPrompt.question;
@@ -60,25 +65,27 @@ function RefreshQuestionInfo(index) {
 }
 
 function EvaluateAnswer(answerChosenId, answerIndex) {
+  console.log('Evaluated question in index: ', answerIndex);
 
   var question = quizQuestions[answerIndex];
   var quizAnswer = question.correctAnswer;
   var userAnswer = document.querySelector(`#${answerChosenId.replace('RadioBtn', 'Lbl')}`).innerHTML;
 
+  //alert(`quiz: ${quizAnswer} user: ${userAnswer}`);
+
   if (quizAnswer === userAnswer) {
     //right
     document.querySelector("#answerResult").innerHTML = "Previous answer was: Right!";
-    rightCount++;
-
-
+    correctCount++;
   } else {
     //wrong
     document.querySelector("#answerResult").innerHTML = "Previous answer was: Wrong!";
-
   }
-
 }
 
+function CalculateScore() {
+  return correctCount * 20
+}
 
 function ToggleHideShow(elementId) {
   var elem = document.getElementById(`${elementId}`);
@@ -89,47 +96,88 @@ function ToggleHideShow(elementId) {
   }
 }
 
+function BuildOL(array) {
+  // Create the list element:
+  var list = document.createElement('ol');
+
+  for (var i = 0; i < array.length; i++) {
+    // Create the list item:
+    var item = document.createElement('li');
+
+    // Set its contents:
+    item.appendChild(document.createTextNode(array[i]));
+
+    // Add it to the list:
+    list.appendChild(item);
+  }
+
+  // Finally, return the constructed list:
+  return list;
+}
+
 function ClickEvent(value, elementId, args) {
   //alert(`Clicked Something: ${elementId}`);
 
   switch (value) {
     case "start":
-      // code block   
+      console.log('question On Display: ', questionIndexOnDisplay + 1, 'questionIndexOnDisplay: ', questionIndexOnDisplay);
       ToggleHideShow('startModal');
+      ToggleHideShow('questionModal');
       RefreshQuestionInfo(0);
       break;
     case "answer":
-    	console.log('questionOnDisplay: ', questionOnDisplay);
-      if (questionOnDisplay < 5) {
-        EvaluateAnswer(elementId, questionOnDisplay);
-        RefreshQuestionInfo(questionOnDisplay);
+      console.log('question On Display: ', questionIndexOnDisplay + 2, 'questionIndexOnDisplay: ', questionIndexOnDisplay + 1);
+
+      EvaluateAnswer(elementId, questionIndexOnDisplay);
+      if (questionIndexOnDisplay < 4) {
+        //EvaluateAnswer(elementId, questionIndexOnDisplay);
+
+        //Refresh next question
+        RefreshQuestionInfo(questionIndexOnDisplay + 1);
       } else {
+        //EvaluateAnswer(elementId, questionIndexOnDisplay);
         ToggleHideShow('questionModal');
+        ToggleHideShow('doneModal');
+        document.querySelector("#finalScore").innerHTML = CalculateScore()
       }
+
+
 
       // code block
       break;
-    case "submitScore":
+    case "submitScore":      
+      var userResult = document.querySelector("#initials").value;
+      quizes.push(`${userResult} - ${CalculateScore()}`);
+      
+      
+      document.querySelector("#initials").value = '';
+      ToggleHideShow('doneModal');
+      ToggleHideShow('highScoresModal');
+
+      document.getElementById('highScoresBody').innerHTML = '';
+      // Add the contents of quizes:
+      document.getElementById('highScoresBody').appendChild(BuildOL(quizes));
+
       // code block
       break;
     case "goBack":
       // code block
+      ToggleHideShow('highScoresModal');
+      ToggleHideShow('startModal');
+      ResetForm();
       break;
     case "clearScores":
       // code block
+      quizes = [];
+      document.getElementById('highScoresBody').innerHTML = '';
       break;
     default:
       // code block
       break;
   }
-
-
-
-
 }
 
 function here() {
-
 }
 
 // Add event listener to generate button
@@ -160,3 +208,8 @@ submitScoreBtn.addEventListener("click", function() {
 
 goBackBtn.addEventListener("click", function() {
   ClickEvent("goBack", "goBack", null);
+});
+
+clearScoresBtn.addEventListener("click", function() {
+  ClickEvent("clearScores", "clearScores", null);
+});
