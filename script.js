@@ -129,7 +129,7 @@ function StopTimer() {
 
 function TimerCountDown(callback) {
 
-  var count = 25;
+  var count = 75;
 
   interval = setInterval(function() {
     document.getElementById('timer').innerHTML = count;
